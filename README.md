@@ -7,8 +7,8 @@ Repository created for Flutter Developer Assessment Test
 - the dummy user can only reply "yes", "ok", "no"
 - the user input only comes from audio and output as text chat from user
 - implement any STT (Speech to Text)
-- Use riverpod as state management https://pub.dev/packages/flutter_riverpod
-- Use latest flutter sdk
+- Please use riverpod as state management https://pub.dev/packages/flutter_riverpod
+- The deadline would be at Monday 9th, 8pm.
 
 # What is considered as a plus
 - Code efficiency and performance
