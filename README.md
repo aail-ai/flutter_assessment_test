@@ -8,6 +8,7 @@ Repository created for Flutter Developer Assessment Test
 - the user input only comes from audio and output as text chat from user
 - implement any STT (Speech to Text)
 - Please use riverpod as state management https://pub.dev/packages/flutter_riverpod
+- Once done, you can crate a PR pointing to this repository and inform us through email at surya@aail.ai
 - The deadline would be at Monday 9th, 8pm.
 
 # What is considered as a plus
