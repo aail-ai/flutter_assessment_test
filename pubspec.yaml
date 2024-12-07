@@ -1,0 +1,25 @@
+name: stt_app
+description: "A chat app for final assestment test AAIL"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  chat_bubbles: ^1.6.0
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.6.1
+  get_it: ^8.0.2
+  google_fonts: ^6.2.1
+  permission_handler: ^11.3.1
+  speech_to_text: ^7.0.0
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
