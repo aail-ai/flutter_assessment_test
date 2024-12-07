@@ -28,18 +28,24 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  auto_route: ^9.2.2
   cupertino_icons: ^1.0.6
   equatable: ^2.0.7
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.6.1
+  get_it: ^7.6.0
   hive_flutter: ^1.1.0
-  speech_to_text: ^7.0.0
+  injectable: ^2.5.0
+  speech_to_text: ^6.3.0
 
 dev_dependencies:
+  auto_route_generator: ^9.0.0
+  build_runner: ^2.4.11
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
+  injectable_generator: ^2.6.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
