@@ -1,7 +1,9 @@
 import 'package:flutter_assessment_test/modules/chat/data/data_source/local/chat_local_dts.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/entities/chat_message_histories.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/repositories/chat_repo.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: ChatRepo)
 class ChatRepoImpl implements ChatRepo {
   final ChatLocalDts _chatLocalDts;
 
