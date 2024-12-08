@@ -10,13 +10,22 @@ class ChatLocalDtsImpl implements ChatLocalDts {
   @override
   Future<void> saveChat(ChatMessageHistories chatMessageHistories) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('chat_messages', jsonEncode(chatMessageHistories.toJson()));
+    final chatMessages = await getChats();
+    final String jsonStr = jsonEncode([...chatMessages, chatMessageHistories]);
+    await prefs.setString('chat_messages', jsonStr);
   }
 
   @override
   Future<List<ChatMessageHistories>> getChats() async {
     final prefs = await SharedPreferences.getInstance();
-    final chatMessageHistories = ChatMessageHistories.fromJson(jsonDecode(prefs.getString('chat_messages') ?? '{}'));
-    return [chatMessageHistories];
+    final String? jsonStr = prefs.getString('chat_messages');
+
+    if (jsonStr == null || jsonStr.isEmpty) {
+      return [];
+    }
+
+    final List<dynamic> jsonList = jsonDecode(jsonStr);
+    final chatMessageHistories = jsonList.map((e) => ChatMessageHistories.fromJson(e as Map<String, dynamic>)).toList();
+    return chatMessageHistories;
   }
 }
