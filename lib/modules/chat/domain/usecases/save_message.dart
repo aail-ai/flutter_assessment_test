@@ -1,3 +1,4 @@
+import 'package:flutter_assessment_test/core/extension/future_ext.dart';
 import 'package:flutter_assessment_test/core/types/resource.dart';
 import 'package:flutter_assessment_test/core/types/usecase.dart';
 import 'package:flutter_assessment_test/core/types/nothing.dart';
@@ -13,7 +14,11 @@ class SaveMessage extends UseCase<ChatMessageHistories, Nothing> {
 
   @override
   Future<Resource<Nothing>> execute(ChatMessageHistories params) async {
-    await _chatRepo.saveChat(params);
+    final result = await _chatRepo.saveChat(params).asResource;
+
+    if (result is Error) {
+      return Resource.error(result.exception);
+    }
     return Resource.success(const Nothing());
   }
 }
