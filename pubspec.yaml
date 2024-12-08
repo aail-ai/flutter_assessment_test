@@ -1,0 +1,33 @@
+name: flutter_assessment_test
+description: "A new Inovation Chat Bot App"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.4 <4.0.0'
+
+dependencies:
+  auto_route: ^9.2.2
+  cupertino_icons: ^1.0.6
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.6.1
+  get_it: ^7.6.0
+  injectable: ^2.5.0
+  shared_preferences: ^2.3.3
+  speech_to_text: ^6.3.0
+
+dev_dependencies:
+  auto_route_generator: ^9.0.0
+  build_runner: ^2.4.11
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+  injectable_generator: ^2.6.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
