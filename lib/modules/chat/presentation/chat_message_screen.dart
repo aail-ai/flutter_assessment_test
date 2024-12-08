@@ -16,6 +16,7 @@ class ChatScreen extends ConsumerStatefulWidget {
   final ChatMessageHistories? initialData;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ChatScreenState createState() => _ChatScreenState();
 }
 
