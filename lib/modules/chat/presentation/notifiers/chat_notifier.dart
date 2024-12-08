@@ -1,6 +1,7 @@
 // lib/modules/chat/presentation/providers/chat_notifier.dart
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_assessment_test/core/extension/resource_ext.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/entities/chat_message.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/entities/chat_message_histories.dart';
@@ -12,7 +13,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 class ChatNotifier extends StateNotifier<ChatState> {
   final SaveMessage _saveMessage;
   final SpeechToText _speech;
-  ChatNotifier(this._saveMessage, this._speech) : super(ChatState()) {
+  ChatNotifier(this._saveMessage, this._speech) : super(ChatState(isLoading: false)) {
     _initializeSpeech();
   }
 
@@ -81,18 +82,24 @@ class ChatNotifier extends StateNotifier<ChatState> {
 
   Future<void> saveCurrentConversation(List<ChatMessage> messages) async {
     setLoading(true);
+    await Future.delayed(const Duration(seconds: 2));
+    debugPrint('Saving conversation with messages: $messages');
     final newHistory = ChatMessageHistories(
       chatMessages: messages,
       timestamp: DateTime.now(),
     );
 
-    final result = await _saveMessage.execute(newHistory);
+    final result = await _saveMessage(newHistory);
     result.when(
-      success: (_) {},
+      success: (_) {
+        debugPrint('Conversation saved successfully');
+        setLoading(false);
+      },
       error: (error) {
+        debugPrint('Conversation saved failed');
+        setLoading(false);
         setError(error.toString());
       },
     );
-    setLoading(false);
   }
 }
