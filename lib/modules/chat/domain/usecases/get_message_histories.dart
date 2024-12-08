@@ -6,7 +6,7 @@ import 'package:flutter_assessment_test/modules/chat/domain/repositories/chat_re
 import 'package:injectable/injectable.dart';
 
 @injectable
-class GetMessageHistories extends UsecaseNoParams<List<ChatMessageHistories>> {
+class   GetMessageHistories extends UsecaseNoParams<List<ChatMessageHistories>> {
   final ChatRepo _chatRepo;
 
   GetMessageHistories({required ChatRepo chatRepo}) : _chatRepo = chatRepo;

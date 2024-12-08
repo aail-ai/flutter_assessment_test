@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_assessment_test/core/shared_widgets/dialogs/alert_dialog_with_icon.dart';
+import 'package:flutter_assessment_test/modules/chat/domain/entities/chat_message_histories.dart';
 import 'package:flutter_assessment_test/modules/chat/presentation/notifiers/chat_notifier.dart';
 import 'package:flutter_assessment_test/modules/chat/presentation/notifiers/chat_state.dart';
 import 'package:flutter_assessment_test/modules/chat/presentation/widgets/chat_bubble.dart';
@@ -8,19 +11,37 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_assessment_test/modules/chat/presentation/providers/chat_provider.dart';
 
 @RoutePage()
-class ChatScreen extends ConsumerWidget {
-  const ChatScreen({super.key});
+class ChatScreen extends ConsumerStatefulWidget {
+  const ChatScreen({super.key, required this.initialData});
+  final ChatMessageHistories? initialData;
 
-  void _handlePop(BuildContext context, ChatState chatState, ChatNotifier notifier) async {
-    
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
 
+class _ChatScreenState extends ConsumerState<ChatScreen> {
+  late ChatNotifier notifier;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifier = ref.read(chatProvider.notifier);
+      if (widget.initialData != null) {
+        notifier.setMessages(widget.initialData!.chatMessages);
+      } else {
+        notifier.clearMessages();
+      }
+    });
+  }
+
+  Future<void> _handlePop(BuildContext context, ChatState chatState) async {
     final bool? shouldPop = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialogWithIcon(
         centeredTitle: true,
         title: 'Want to Save This Conversation?',
-        description:
-            'You can save this conversation for future reference. It will be saved in your device storage.',
+        description: 'You can save this conversation for future reference. It will be saved in your device storage.',
         onConfirmText: 'Save',
         onConfirmed: () => Navigator.of(context).pop(true),
         onCanceledText: 'Just Leave',
@@ -29,30 +50,31 @@ class ChatScreen extends ConsumerWidget {
     );
 
     if (context.mounted && shouldPop != null && shouldPop) {
-      notifier.saveCurrentConversation(chatState.messages);
-      Navigator.of(context).pop();
+      await notifier.saveCurrentConversation(chatState.messages);
+      notifier.clearMessages();
+      Navigator.of(context).pop(true);
     } else {
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(false);
+      notifier.clearMessages();
     }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final chatState = ref.watch(chatProvider);
-    final notifier = ref.read(chatProvider.notifier);
     return PopScope(
-      canPop: false,
+      canPop: chatState.messages.isEmpty || widget.initialData != null,
       onPopInvoked: (didPop) async {
         if (didPop) {
           return;
         }
-        _handlePop(context, chatState, notifier);
+        await _handlePop(context, chatState);
       },
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          centerTitle: true,
-          
+          centerTitle: false,
+          backgroundColor: const Color(0xFF0A0F26),
           leading: InkWell(
             onTap: () {
               context.router.maybePop();
@@ -62,9 +84,8 @@ class ChatScreen extends ConsumerWidget {
               color: Colors.white,
             ),
           ),
-          backgroundColor: const Color(0xFF0A0F26),
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(
                 'assets/icons/ai_icon.png',
@@ -123,25 +144,32 @@ class ChatScreen extends ConsumerWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            chatState.isListening ? 'Listening...' : 'Tap microphone to speak',
+                            widget.initialData != null
+                                ? 'Currently you can only view the conversation, not able to send message'
+                                : chatState.isListening
+                                    ? 'Listening...'
+                                    : 'Tap microphone to speak',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.grey[300],
                             ),
                           ),
                         ),
-                        FloatingActionButton(
-                          onPressed: () {
-                            if (chatState.isListening) {
-                              notifier.stopListening();
-                            } else {
-                              notifier.startListening();
-                            }
-                          },
-                          child: Icon(
-                            chatState.isListening ? Icons.stop : Icons.mic,
+                        if (widget.initialData == null)
+                          FloatingActionButton(
+                            backgroundColor: Color.fromARGB(255, 7, 52, 119),
+                            onPressed: () {
+                              if (chatState.isListening) {
+                                notifier.stopListening();
+                              } else {
+                                notifier.startListening();
+                              }
+                            },
+                            child: Icon(
+                              chatState.isListening ? Icons.stop : Icons.mic,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
