@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_assessment_test/core/extensions/datetime_ext.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/entities/chat_message.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -12,10 +12,13 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 4.0,
+      margin: EdgeInsets.only(
+        right: message.isUser ? 8.0 : 48.0,
+        left: message.isUser ? 48.0 : 8.0,
+        top: 4.0,
+        bottom: 4.0,
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
@@ -38,14 +41,16 @@ class ChatBubble extends StatelessWidget {
             style: const TextStyle(fontSize: 16.0),
           ),
           Text(
-            message.isUser ? 'You' : 'Bot',
+            message.timestamp.formatTimestamp(),
             style: TextStyle(
-              fontSize: 12.0,
-              color: Colors.grey[600],
+              fontSize: 10.0,
+              color: Colors.grey[500],
             ),
           ),
         ],
       ),
     );
   }
+
+
 }
