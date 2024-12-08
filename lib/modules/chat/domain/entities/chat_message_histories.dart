@@ -6,7 +6,17 @@ class ChatMessageHistories extends Equatable {
   final DateTime timestamp;
 
   const ChatMessageHistories({required this.chatMessages, required this.timestamp});
-  
+
   @override
   List<Object?> get props => [chatMessages, timestamp];
+
+  factory ChatMessageHistories.fromJson(Map<String, dynamic> json) => ChatMessageHistories(
+        chatMessages: json['chatMessages'].map((msg) => ChatMessage.fromJson(msg)).toList(),
+        timestamp: DateTime.fromMillisecondsSinceEpoch(json['timestamp']),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'chatMessages': chatMessages.map((msg) => msg.toJson()).toList(),
+        'timestamp': timestamp.millisecondsSinceEpoch,
+      };  
 }
