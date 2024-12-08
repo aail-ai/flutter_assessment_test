@@ -9,7 +9,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:flutter/material.dart' as _i4;
 import 'package:flutter_assessment_test/modules/chat/presentation/chat_message_screen.dart'
     as _i1;
 import 'package:flutter_assessment_test/modules/home/presentation/home_screen.dart'
@@ -17,13 +16,10 @@ import 'package:flutter_assessment_test/modules/home/presentation/home_screen.da
 
 /// generated route for
 /// [_i1.ChatScreen]
-class ChatRoute extends _i3.PageRouteInfo<ChatRouteArgs> {
-  ChatRoute({
-    _i4.Key? key,
-    List<_i3.PageRouteInfo>? children,
-  }) : super(
+class ChatRoute extends _i3.PageRouteInfo<void> {
+  const ChatRoute({List<_i3.PageRouteInfo>? children})
+      : super(
           ChatRoute.name,
-          args: ChatRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -32,22 +28,9 @@ class ChatRoute extends _i3.PageRouteInfo<ChatRouteArgs> {
   static _i3.PageInfo page = _i3.PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<ChatRouteArgs>(orElse: () => const ChatRouteArgs());
-      return _i1.ChatScreen(key: args.key);
+      return const _i1.ChatScreen();
     },
   );
-}
-
-class ChatRouteArgs {
-  const ChatRouteArgs({this.key});
-
-  final _i4.Key? key;
-
-  @override
-  String toString() {
-    return 'ChatRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for
