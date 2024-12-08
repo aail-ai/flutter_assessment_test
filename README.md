@@ -62,3 +62,8 @@ Main dependencies used in this project:
 - shared_preferences: Local storage
 - injectable: Dependency injection
 
+## Demo
+https://github.com/user-attachments/assets/0356fdae-3b45-4376-b6ac-dfde2830aa37
+
+
+
