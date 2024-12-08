@@ -1,23 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter_assessment_test/modules/chat/data/data_source/local/chat_local_dts.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/entities/chat_message_histories.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: ChatLocalDts)
 class ChatLocalDtsImpl implements ChatLocalDts {
   @override
   Future<void> saveChat(ChatMessageHistories chatMessageHistories) async {
-    await Hive.box<ChatMessageHistories>('chat_messages')
-        .put(DateTime.now().millisecondsSinceEpoch, chatMessageHistories);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('chat_messages', jsonEncode(chatMessageHistories.toJson()));
   }
 
   @override
   Future<List<ChatMessageHistories>> getChats() async {
-    final box = Hive.box<ChatMessageHistories>('chat_messages');
-    final chatMessageHistories = <ChatMessageHistories>[];
-    for (var chatHistory in box.values) {
-      chatMessageHistories.add(chatHistory);
-    }
-    return chatMessageHistories;
+    final prefs = await SharedPreferences.getInstance();
+    final chatMessageHistories = ChatMessageHistories.fromJson(jsonDecode(prefs.getString('chat_messages') ?? '{}'));
+    return [chatMessageHistories];
   }
 }
