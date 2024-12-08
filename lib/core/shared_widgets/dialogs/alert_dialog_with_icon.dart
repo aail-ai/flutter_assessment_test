@@ -57,7 +57,7 @@ class AlertDialogWithIcon extends StatelessWidget {
             right: 16.0,
           ),
           margin: const EdgeInsets.only(top: 24.0),
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(16.0),

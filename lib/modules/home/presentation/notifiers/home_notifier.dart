@@ -1,4 +1,4 @@
-import 'package:flutter_assessment_test/core/extension/resource_ext.dart';
+import 'package:flutter_assessment_test/core/extensions/resource_ext.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/usecases/get_message_histories.dart';
 import 'package:flutter_assessment_test/modules/home/presentation/providers/home_state.dart';

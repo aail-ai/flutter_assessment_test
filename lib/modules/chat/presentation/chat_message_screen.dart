@@ -157,7 +157,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         ),
                         if (widget.initialData == null)
                           FloatingActionButton(
-                            backgroundColor: Color.fromARGB(255, 7, 52, 119),
+                            backgroundColor: const Color.fromARGB(255, 7, 52, 119),
                             onPressed: () {
                               if (chatState.isListening) {
                                 notifier.stopListening();

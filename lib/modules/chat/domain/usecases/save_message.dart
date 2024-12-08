@@ -1,4 +1,4 @@
-import 'package:flutter_assessment_test/core/extension/future_ext.dart';
+import 'package:flutter_assessment_test/core/extensions/future_ext.dart';
 import 'package:flutter_assessment_test/core/types/resource.dart';
 import 'package:flutter_assessment_test/core/types/usecase.dart';
 import 'package:flutter_assessment_test/core/types/nothing.dart';

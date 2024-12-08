@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_assessment_test/core/extension/resource_ext.dart';
+import 'package:flutter_assessment_test/core/extensions/resource_ext.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/entities/chat_message.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/entities/chat_message_histories.dart';
 import 'package:flutter_assessment_test/modules/chat/domain/usecases/save_message.dart';
